@@ -1,7 +1,7 @@
 # Greenspaces
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Part of PUMP](https://img.shields.io/badge/ecosystem-PUMP-blue)](https://github.com/pump-engine)
+[![Part of PUMP (Pure Momentum Prompts)](https://img.shields.io/badge/ecosystem-PUMP-blue)](https://github.com/go-go-pump)
 [![Components](https://img.shields.io/badge/status-bootstrapping-orange)]()
 
 **The MilliPrime Co-Op Toolkit — shared components and services for indy founders.**
@@ -15,7 +15,7 @@ Greenspaces is the shared repository of reusable components and full services th
 ## Quick Start
 
 ```bash
-git clone git@github.com:pump-engine/greenspaces.git
+git clone git@github.com:go-go-pump/greenspaces.git
 ```
 
 Browse the catalog: [CATALOG.md](./CATALOG.md) | Browse services: [SERVICES.md](./SERVICES.md)
@@ -62,8 +62,8 @@ Projects don't fork Greenspaces. They reference it. When a PUMP triggers a new p
 
 | Repo | Purpose | Visibility |
 |------|---------|-----------|
-| [god-mode](https://github.com/pump-engine/god-mode) | Entry point + PUMP master spec | Private |
-| [1kh](https://github.com/pump-engine/1kh) | Standards engine | Public |
+| [god-mode](https://github.com/go-go-pump/god-mode) | Entry point + PUMP master spec | Private |
+| [1kh](https://github.com/go-go-pump/1kh) | Standards engine | Public |
 | **greenspaces** (this repo) | Shared components + services | Public |
 
 ## For MilliPrimes
