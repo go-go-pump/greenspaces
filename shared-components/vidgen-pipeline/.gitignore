@@ -1,0 +1,11 @@
+node_modules/
+dist/
+output/
+tmp/
+.env
+*.mp3
+*.mp4
+*.png
+*.jpg
+!src/templates/**/*.png
+!assets/**/*.mp3

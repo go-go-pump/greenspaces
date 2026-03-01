@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    display: flex; flex-direction: column;
+    justify-content: flex-start; align-items: center;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #ffffff; overflow: hidden; padding: 80px;
+  }
+  .section-title {
+    font-size: 48px; font-weight: 700;
+    margin-bottom: 50px; text-align: center;
+  }
+  .columns {
+    display: flex; gap: 40px;
+    width: 100%; max-width: 1500px; flex: 1;
+  }
+  .column {
+    flex: 1; border-radius: 20px; padding: 40px;
+    display: flex; flex-direction: column;
+  }
+  .column-left {
+    background: rgba(72, 199, 142, 0.12);
+    border: 2px solid rgba(72, 199, 142, 0.4);
+  }
+  .column-right {
+    background: rgba(255, 99, 99, 0.12);
+    border: 2px solid rgba(255, 99, 99, 0.4);
+  }
+  .column-heading {
+    font-size: 36px; font-weight: 700;
+    margin-bottom: 30px; text-align: center;
+  }
+  .column-left .column-heading { color: #48c78e; }
+  .column-right .column-heading { color: #ff6363; }
+  .column-item {
+    font-size: 28px; line-height: 1.4;
+    margin-bottom: 20px; padding-left: 20px;
+    position: relative; color: #d8d7ff;
+  }
+  .column-item::before {
+    content: '';
+    position: absolute; left: 0; top: 12px;
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .column-left .column-item::before { background: #48c78e; }
+  .column-right .column-item::before { background: #ff6363; }
+</style>
+</head>
+<body>
+  <div class="section-title">{{title}}</div>
+  <div class="columns">
+    <div class="column column-left">
+      <div class="column-heading">{{leftHeading}}</div>
+      {{leftItems}}
+    </div>
+    <div class="column column-right">
+      <div class="column-heading">{{rightHeading}}</div>
+      {{rightItems}}
+    </div>
+  </div>
+</body>
+</html>

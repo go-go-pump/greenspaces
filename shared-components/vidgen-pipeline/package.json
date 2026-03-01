@@ -1,0 +1,26 @@
+{
+  "name": "vidgen",
+  "version": "0.1.0",
+  "description": "Automated video generation pipeline — topic to narrated slideshow MP4",
+  "main": "src/cli.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.4.7",
+    "fluent-ffmpeg": "^2.1.3",
+    "puppeteer": "^24.2.1",
+    "sharp": "^0.33.5",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.27",
+    "@types/node": "^20.17.19",
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

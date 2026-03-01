@@ -1,6 +1,6 @@
 # Greenspaces — Shared Components Catalog
 
-**Last Updated:** February 28, 2026
+**Last Updated:** March 1, 2026
 
 ---
 
@@ -26,7 +26,7 @@ A shared component must meet ALL of the following criteria:
 | `CANDIDATE` | `email-campaign-core` | Campaign sequencing engine (schedule, send, track) | Mass Email Platform, MVH | Mass Email Platform |
 | `CANDIDATE` | `contact-store` | Multi-tenant contact database (up to 5M records, CSV import) | Mass Email Platform | Mass Email Platform |
 | `CANDIDATE` | `browser-watcher` | Puppeteer-based browser automation utility | Social DM Platform, MVH (LabCorp) | BORABORA |
-| `CANDIDATE` | `vidgen-pipeline` | Automated video generation (topic → MP4) | Vidgen, Video Platform | Vidgen |
+| `AVAILABLE` | `vidgen-pipeline` | Automated video generation (topic → MP4) | Video Platform, YOMO | Greenspaces (onboarded from Vidgen) |
 | `CANDIDATE` | `vidpub` | YouTube publish + metadata (Data API v3 + Puppeteer fallback) | Video Platform | Video Platform |
 | `CANDIDATE` | `vid-campaign` | Video campaign lifecycle (research → produce → publish → monitor) | Video Platform | Video Platform |
 | `CANDIDATE` | `metric-beacon` | Lightweight metric publisher (Prometheus-style text exposition) | All projects | New |

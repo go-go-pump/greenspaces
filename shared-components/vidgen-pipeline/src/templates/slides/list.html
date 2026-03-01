@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    display: flex; flex-direction: column;
+    justify-content: flex-start; align-items: flex-start;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #ffffff; overflow: hidden; padding: 80px 120px;
+  }
+  .section-title {
+    font-size: 52px; font-weight: 700;
+    margin-bottom: 50px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .list-container { width: 100%; }
+  .list-item {
+    display: flex; align-items: flex-start;
+    margin-bottom: 30px; padding: 20px 30px;
+    background: rgba(255,255,255,0.06);
+    border-left: 4px solid #667eea;
+    border-radius: 0 12px 12px 0;
+  }
+  .list-icon {
+    font-size: 28px; margin-right: 20px;
+    color: #667eea; flex-shrink: 0; margin-top: 2px;
+  }
+  .list-text {
+    font-size: 32px; line-height: 1.4;
+    color: #e8e7ff; font-weight: 400;
+  }
+</style>
+</head>
+<body>
+  <div class="section-title">{{title}}</div>
+  <div class="list-container">{{items}}</div>
+</body>
+</html>
