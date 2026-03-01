@@ -29,8 +29,8 @@ A shared component must meet ALL of the following criteria:
 | `AVAILABLE` | `vidgen-pipeline` | Automated video generation (topic → MP4) | Video Platform, YOMO | Greenspaces (onboarded from Vidgen) |
 | `CANDIDATE` | `vidpub` | YouTube publish + metadata (Data API v3 + Puppeteer fallback) | Video Platform | Video Platform |
 | `CANDIDATE` | `vid-campaign` | Video campaign lifecycle (research → produce → publish → monitor) | Video Platform | Video Platform |
-| `CANDIDATE` | `metric-beacon` | Lightweight metric publisher (Prometheus-style text exposition) | All projects | New |
-| `CANDIDATE` | `metric-snapshot` | Polls metric endpoint, saves snapshot as TXT, evaluates thresholds | Monitoring Dashboard | New |
+| `AVAILABLE` | `metric-beacon` | Lightweight metric publisher (Prometheus-style text exposition) | All projects | Greenspaces (new build) |
+| `AVAILABLE` | `metric-snapshot` | Polls metric endpoint, saves snapshot as TXT, evaluates thresholds | Monitoring Dashboard | Greenspaces (new build) |
 | `CANDIDATE` | `seed-manager` | Test data seeding + teardown for any SQLite/Supabase project | MVH, All future projects | MVH |
 | `CANDIDATE` | `fb-auth` | Facebook cookie-based authentication (Puppeteer login + persistence) | Social DM Platform | BORABORA |
 | `CANDIDATE` | `fb-graphql-scraper` | Facebook GraphQL interception for post/comment scraping | Social DM Platform | BORABORA |

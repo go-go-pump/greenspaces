@@ -1,0 +1,22 @@
+{
+  "name": "metric-beacon",
+  "version": "1.0.0",
+  "description": "Lightweight metric publisher using Prometheus-style text exposition format",
+  "type": "module",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./middleware": "./src/middleware.mjs"
+  },
+  "scripts": {
+    "start": "node src/cli.mjs",
+    "test": "node --test test/metric-beacon.test.mjs"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "express": "^4.21.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

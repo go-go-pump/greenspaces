@@ -1,0 +1,20 @@
+{
+  "name": "metric-snapshot",
+  "version": "1.0.0",
+  "description": "Polls metric-beacon endpoint, saves snapshots, evaluates thresholds, generates dashboards",
+  "type": "module",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "scripts": {
+    "start": "node src/cli.mjs",
+    "test": "node --test test/metric-snapshot.test.mjs"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
