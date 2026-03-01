@@ -18,7 +18,7 @@ Greenspaces is the shared repository of reusable components and full services th
 git clone git@github.com:go-go-pump/greenspaces.git
 ```
 
-Browse the catalog: [CATALOG.md](./CATALOG.md) | Browse services: [SERVICES.md](./SERVICES.md)
+Browse the catalog: [CATALOG.md](./CATALOG.md) | Browse platforms: [platforms/](./platforms/) | Browse services: [SERVICES.md](./SERVICES.md)
 
 ---
 
@@ -36,16 +36,24 @@ greenspaces/
 ├── CATALOG.md                             # Master index of all shared components
 ├── SERVICES.md                            # Full services catalog
 ├── shared-components/                     # Reusable building blocks
-│   └── (components listed in CATALOG.md)
+│   ├── vidgen-pipeline/                   # Automated video generation (AVAILABLE)
+│   ├── vidpub/                            # YouTube publishing (AVAILABLE)
+│   ├── vid-campaign/                      # Video campaign lifecycle (AVAILABLE)
+│   └── (more components in CATALOG.md)
+├── platforms/                             # Reference architectures by domain
+│   ├── video-platform/                    # YouTube video content platform
+│   └── (more platforms as components mature)
 └── services/                              # Full service suites
     ├── marketing-platform-suite/          # Video, social, email services
     ├── business-orchestration-suite/      # Testing, monitoring, deployment
     └── business-creation-exit-suite/      # Registration, vendor listing, exit
 ```
 
-## Shared Components vs Services
+## Shared Components vs Platforms vs Services
 
 **Shared Components** are discrete, composable building blocks — a single concern, well-tested, documented, and consumed by multiple projects. Think: `auth-otp`, `email-send`, `browser-watcher`, `metric-beacon`.
+
+**Platforms** are curated collections of shared components for a specific domain. They're reference architectures — businesses create their own platform instances, not shared ones. Think: Video Platform (vidgen-pipeline + vidpub + vid-campaign), Social DM Platform (fb-auth + fb-scraper + browser-watcher). See [platforms/](./platforms/).
 
 **Services** are orchestrated collections of components that deliver a complete business capability. Think: Marketing Platform Suite (vidgen + vidpub + vid-campaign + video-market-research), Business Orchestration Suite (testing dashboard + monitoring + deployment).
 

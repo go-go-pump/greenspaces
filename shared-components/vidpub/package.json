@@ -1,0 +1,21 @@
+{
+  "name": "vidpub",
+  "version": "1.0.0",
+  "description": "YouTube video publishing — Data API v3 + Puppeteer fallback",
+  "type": "module",
+  "main": "src/publish.mjs",
+  "bin": {
+    "vidpub": "src/cli.mjs"
+  },
+  "scripts": {
+    "publish": "node src/cli.mjs",
+    "test": "node --test src/tests/"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "puppeteer": "^24.2.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

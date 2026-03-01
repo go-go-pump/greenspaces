@@ -1,0 +1,20 @@
+{
+  "name": "vid-campaign",
+  "version": "1.0.0",
+  "description": "Video campaign lifecycle manager — research, produce, publish, monitor",
+  "type": "module",
+  "main": "src/campaign.mjs",
+  "bin": {
+    "vid-campaign": "src/cli.mjs"
+  },
+  "scripts": {
+    "start": "node src/cli.mjs",
+    "test": "node --test src/tests/"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

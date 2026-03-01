@@ -27,8 +27,8 @@ A shared component must meet ALL of the following criteria:
 | `CANDIDATE` | `contact-store` | Multi-tenant contact database (up to 5M records, CSV import) | Mass Email Platform | Mass Email Platform |
 | `CANDIDATE` | `browser-watcher` | Puppeteer-based browser automation utility | Social DM Platform, MVH (LabCorp) | BORABORA |
 | `AVAILABLE` | `vidgen-pipeline` | Automated video generation (topic → MP4) | Video Platform, YOMO | Greenspaces (onboarded from Vidgen) |
-| `CANDIDATE` | `vidpub` | YouTube publish + metadata (Data API v3 + Puppeteer fallback) | Video Platform | Video Platform |
-| `CANDIDATE` | `vid-campaign` | Video campaign lifecycle (research → produce → publish → monitor) | Video Platform | Video Platform |
+| `AVAILABLE` | `vidpub` | YouTube publish + metadata (Data API v3 + Puppeteer fallback) | Video Platform, YOMO | Video Platform (extracted) |
+| `AVAILABLE` | `vid-campaign` | Video campaign lifecycle (research → produce → publish → monitor) | Video Platform, YOMO | Video Platform (extracted) |
 | `AVAILABLE` | `metric-beacon` | Lightweight metric publisher (Prometheus-style text exposition) | All projects | Greenspaces (new build) |
 | `AVAILABLE` | `metric-snapshot` | Polls metric endpoint, saves snapshot as TXT, evaluates thresholds | Monitoring Dashboard | Greenspaces (new build) |
 | `CANDIDATE` | `seed-manager` | Test data seeding + teardown for any SQLite/Supabase project | MVH, All future projects | MVH |
@@ -75,6 +75,20 @@ When a shared component changes in a way that affects consuming projects:
 2. Assess impact (breaking vs. additive)
 3. If breaking → institute an "ecosystem-wide change" ticket that coordinates updates across all consumers
 4. If additive → update component, notify consumers, they adopt at their pace
+
+---
+
+## Platforms
+
+Platforms are curated collections of shared components for a specific domain. They serve as **reference architectures** — businesses create their own platform instances, not shared ones. See [platforms/README.md](./platforms/README.md) for the full concept.
+
+| Platform | Domain | Core Components | Status |
+|----------|--------|----------------|--------|
+| `video-platform` | YouTube video content | vidgen-pipeline, vidpub, vid-campaign | AVAILABLE — [reference doc](./platforms/video-platform/) |
+| `social-dm-platform` | Facebook engagement + DM outreach | fb-auth, fb-graphql-scraper, browser-watcher | Components are CANDIDATE |
+| `cold-email-platform` | Multi-tenant email campaigns | email-campaign-core, contact-store, email-send | Components are CANDIDATE |
+| `testing-platform` | E2E testing + seed data | e2e-test-runner, seed-manager | Components are PLANNED |
+| `monitoring-platform` | Health checks + business metrics | metric-beacon, metric-snapshot | Components are AVAILABLE |
 
 ---
 
