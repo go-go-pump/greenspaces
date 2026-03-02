@@ -1,92 +1,110 @@
 {
-  "id": "yomo-campaign-lifecycle",
+  "journeyId": "yomo-campaign-lifecycle",
   "name": "YOMO Campaign Lifecycle",
-  "description": "Full lifecycle of a YOMO experience campaign: create, add experiences, publish, receive bookings",
+  "description": "End-to-end campaign flow: create → generate → render → publish → analytics",
+  "domain": "yomo",
   "version": "1.0.0",
   "steps": [
     {
       "step": 1,
       "name": "Create Campaign",
-      "description": "Admin creates a new experience campaign with title and region",
-      "route": "/admin/campaigns/new",
-      "method": "GET",
-      "requiresAuth": true,
+      "description": "Founder creates a new video campaign with topic and keyword targeting",
+      "preconditions": [],
       "actions": [
-        { "type": "fill", "selector": "#campaign-name", "value": "Summer Adventures 2026" },
-        { "type": "select", "selector": "#region", "value": "northeast" },
-        { "type": "fill", "selector": "#description", "value": "Curated summer experiences across the Northeast" },
-        { "type": "click", "selector": "#create-campaign" }
+        "Navigate to /campaigns/new",
+        "Enter campaign name and topic",
+        "Select keyword targets",
+        "Click 'Create Campaign'"
       ],
-      "assertions": [
-        { "type": "url", "value": "/admin/campaigns/test-campaign-001" },
-        { "type": "visible", "selector": ".campaign-header" },
-        { "type": "text", "selector": ".campaign-status", "value": "Draft" }
+      "postconditions": [
+        "Campaign record exists with status 'created'",
+        "Campaign has associated keyword targets"
       ],
-      "artifacts": ["campaign record", "campaign ID"],
-      "seedScript": "./seeds/step-1-create-campaign.mjs",
-      "seedDescription": "Creates test admin user and draft campaign"
+      "artifacts": ["campaign_record", "keyword_targets"],
+      "seedScript": "seeds/seed-step-1.mjs",
+      "testSpec": "yomo-campaign.spec.ts"
     },
     {
       "step": 2,
-      "name": "Add Experiences",
-      "description": "Admin adds experience listings to the campaign",
-      "route": "/admin/campaigns/test-campaign-001/experiences",
-      "method": "GET",
-      "requiresAuth": true,
+      "name": "Generate Assets",
+      "description": "vidgen-pipeline generates script, visuals, and voiceover for the campaign",
+      "preconditions": ["Campaign exists with status 'created'"],
       "actions": [
-        { "type": "click", "selector": "#add-experience" },
-        { "type": "fill", "selector": "#exp-title", "value": "Sunset Kayaking on Lake Champlain" },
-        { "type": "fill", "selector": "#exp-price", "value": "75.00" },
-        { "type": "fill", "selector": "#exp-capacity", "value": "12" },
-        { "type": "click", "selector": "#save-experience" }
+        "Navigate to /campaigns/:id",
+        "Click 'Generate Assets'",
+        "Wait for generation to complete"
       ],
-      "assertions": [
-        { "type": "visible", "selector": ".experience-card" },
-        { "type": "count", "selector": ".experience-card", "value": 3 },
-        { "type": "text", "selector": ".campaign-status", "value": "Draft" }
+      "postconditions": [
+        "Script record exists",
+        "Visual assets generated (slides/images)",
+        "Voiceover audio generated",
+        "Campaign status is 'assets-ready'"
       ],
-      "artifacts": ["3 experience listings linked to campaign"],
-      "seedScript": "./seeds/step-2-add-experiences.mjs",
-      "seedDescription": "Creates campaign with 3 experience listings"
+      "artifacts": ["script_record", "visual_assets", "voiceover_audio"],
+      "seedScript": "seeds/seed-step-2.mjs",
+      "testSpec": "yomo-campaign.spec.ts"
     },
     {
       "step": 3,
-      "name": "Publish Campaign",
-      "description": "Admin publishes the campaign, making experiences live",
-      "route": "/admin/campaigns/test-campaign-001",
-      "method": "GET",
-      "requiresAuth": true,
+      "name": "Render Video",
+      "description": "Assets assembled into final MP4 video with thumbnail",
+      "preconditions": ["Campaign status is 'assets-ready'"],
       "actions": [
-        { "type": "click", "selector": "#publish-campaign" },
-        { "type": "click", "selector": "#confirm-publish" }
+        "Navigate to /campaigns/:id",
+        "Click 'Render Video'",
+        "Wait for render to complete",
+        "Preview video in player"
       ],
-      "assertions": [
-        { "type": "text", "selector": ".campaign-status", "value": "Published" },
-        { "type": "visible", "selector": ".publish-date" }
+      "postconditions": [
+        "MP4 file exists in output directory",
+        "Thumbnail generated",
+        "Campaign status is 'rendered'",
+        "Video player shows preview"
       ],
-      "artifacts": ["published campaign", "public listing URLs"],
-      "seedScript": "./seeds/step-3-publish.mjs",
-      "seedDescription": "Creates published campaign with live experience listings"
+      "artifacts": ["mp4_file", "thumbnail", "render_metadata"],
+      "seedScript": "seeds/seed-step-3.mjs",
+      "testSpec": "yomo-campaign.spec.ts"
     },
     {
       "step": 4,
-      "name": "Receive Bookings",
-      "description": "Customers book experiences, admin views booking dashboard",
-      "route": "/admin/campaigns/test-campaign-001/bookings",
-      "method": "GET",
-      "requiresAuth": true,
+      "name": "Publish to YouTube",
+      "description": "Video uploaded to YouTube with metadata (mocked in test mode)",
+      "preconditions": ["Campaign status is 'rendered'", "MP4 file exists"],
       "actions": [
-        { "type": "navigate", "url": "/admin/campaigns/test-campaign-001/bookings" }
+        "Navigate to /campaigns/:id",
+        "Click 'Publish'",
+        "Confirm publish dialog",
+        "Wait for upload confirmation"
       ],
-      "assertions": [
-        { "type": "count", "selector": ".booking-row", "value": 5 },
-        { "type": "text", "selector": ".total-revenue", "value": "$375.00" },
-        { "type": "visible", "selector": ".booking-chart" }
+      "postconditions": [
+        "YouTube video ID recorded (mocked)",
+        "Campaign status is 'published'",
+        "Publish timestamp recorded"
       ],
-      "artifacts": ["5 bookings", "revenue totals", "booking analytics"],
-      "seedScript": "./seeds/step-4-bookings.mjs",
-      "seedDescription": "Creates published campaign with experiences and 5 mock bookings"
+      "artifacts": ["youtube_video_id", "publish_record"],
+      "seedScript": "seeds/seed-step-4.mjs",
+      "testSpec": "yomo-campaign.spec.ts"
+    },
+    {
+      "step": 5,
+      "name": "View Analytics",
+      "description": "Founder views campaign performance metrics (mocked data)",
+      "preconditions": ["Campaign status is 'published'"],
+      "actions": [
+        "Navigate to /campaigns/:id/analytics",
+        "View views count",
+        "View watch time",
+        "View engagement metrics"
+      ],
+      "postconditions": [
+        "Analytics dashboard displays metrics",
+        "Views count is visible",
+        "Watch time is visible",
+        "CTR is visible"
+      ],
+      "artifacts": ["analytics_snapshot"],
+      "seedScript": "seeds/seed-step-5.mjs",
+      "testSpec": "yomo-campaign.spec.ts"
     }
-  ],
-  "resetScript": "./seeds/reset.mjs"
+  ]
 }

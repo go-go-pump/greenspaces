@@ -1,42 +1,25 @@
-# YOMO — Testing Platform Integration Example
+# YOMO — Testing Platform Example
 
-This example shows how YOMO (experience listings platform) consumes the Testing Platform.
+Demonstrates the testing platform wired into a YOMO (experience listing) campaign lifecycle.
 
-## Structure
+## Journey
 
+The YOMO campaign lifecycle: create a campaign → generate video assets → render video → publish to YouTube → view analytics.
+
+## Files
+
+- `journey-map.json` — Full journey map for YOMO campaign lifecycle
+- `seeds/` — Per-stage seed scripts
+
+## Usage
+
+```bash
+# Seed to step 3 (video rendered)
+node examples/yomo/seeds/seed-step-3.mjs
+
+# Run YOMO-specific tests
+TEST_MODE=true npx playwright test --grep "yomo"
+
+# Reset
+node examples/yomo/seeds/reset.mjs
 ```
-examples/yomo/
-├── README.md                    # This file
-├── journey-map.json             # Campaign lifecycle as journey map
-└── seeds/
-    ├── step-1-create-campaign.mjs
-    ├── step-2-add-experiences.mjs
-    ├── step-3-publish.mjs
-    ├── step-4-bookings.mjs
-    └── reset.mjs
-```
-
-## Integration Pattern
-
-1. **Journey map** defines the campaign lifecycle: create → add experiences → publish → bookings
-2. **Seed scripts** populate YOMO's SQLite DB at each step with `is_test = 1`
-3. **Dashboard** mounts at `/admin/testing` using the template HTML
-4. **Playwright** runs the journey end-to-end against seeded state
-
-## How YOMO Uses This
-
-```javascript
-// In YOMO's greenspaces.json:
-{
-  "platforms": {
-    "testing-platform": {
-      "version": "1.0.0",
-      "journeys": ["test/journeys/campaign-lifecycle.json"],
-      "seeds": ["test/seeds/*.mjs"],
-      "dashboard": "public/admin/testing.html"
-    }
-  }
-}
-```
-
-The key insight: YOMO didn't build any testing infrastructure. It consumed the Testing Platform's patterns, copied the templates, and filled in its domain-specific journeys and seeds.

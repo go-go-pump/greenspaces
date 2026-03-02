@@ -1,70 +1,43 @@
 /**
  * Testing Platform — Seed Script Template
  *
- * Copy this file for each journey step:
- *   seeds/step-1-signup.mjs
- *   seeds/step-2-configure.mjs
- *   seeds/step-3-action.mjs
- *   etc.
+ * Copy as `test/seeds/seed-step-<N>.mjs` and customize.
+ * Seeds the database to the state AFTER step N completes.
  *
- * Each seed is CUMULATIVE — step 3 includes all data from steps 1 and 2.
- * Each seed is IDEMPOTENT — safe to run multiple times.
+ * Usage: node test/seeds/seed-step-1.mjs
  */
 
 import Database from 'better-sqlite3';
 
-// ─── Test Constants ─────────────────────────────────────────────
-const TEST_USER = {
-  email: 'test-user@testing.local',
-  name: 'Test User',
-};
+const DB_PATH = process.env.DB_PATH || './data/app.sqlite';
+const db = new Database(DB_PATH);
 
-const FIXED_TIMESTAMP = '2026-01-01T00:00:00Z';
+// Enable WAL mode for better concurrent access
+db.pragma('journal_mode = WAL');
 
-// ─── Seed Function ──────────────────────────────────────────────
-export default async function seed(dbPath) {
-  const db = new Database(dbPath);
+// ─── Step 1: Create Test User ───────────────────────────────────────────────
+db.prepare(`
+  INSERT OR REPLACE INTO users (id, email, name, created_at, is_test)
+  VALUES ('test-user-001', 'test@example.com', 'Test User', datetime('now'), 1)
+`).run();
 
-  try {
-    db.pragma('journal_mode = WAL');
-    db.pragma('foreign_keys = ON');
+// ─── Step 2: Create Test Configuration (uncomment for step 2+) ─────────────
+// db.prepare(`
+//   INSERT OR REPLACE INTO configurations (id, user_id, name, status, is_test)
+//   VALUES ('test-config-001', 'test-user-001', 'Test Config', 'configured', 1)
+// `).run();
 
-    // Always reset test data first (idempotency)
-    // Order: children before parents (respect FK constraints)
-    // db.prepare('DELETE FROM child_table WHERE is_test = 1').run();
-    db.prepare('DELETE FROM users WHERE is_test = 1').run();
+// ─── Step 3: Create Test Execution (uncomment for step 3+) ─────────────────
+// db.prepare(`
+//   INSERT OR REPLACE INTO executions (id, config_id, status, completed_at, is_test)
+//   VALUES ('test-exec-001', 'test-config-001', 'completed', datetime('now'), 1)
+// `).run();
 
-    // ─── Step 1: Create test user ─────────────────────────────
-    db.prepare(`
-      INSERT INTO users (email, name, is_test, created_at)
-      VALUES (?, ?, 1, ?)
-    `).run(TEST_USER.email, TEST_USER.name, FIXED_TIMESTAMP);
+// ─── Step 4: Create Test Metrics (uncomment for step 4+) ───────────────────
+// db.prepare(`
+//   INSERT OR REPLACE INTO metrics (id, execution_id, metric_name, metric_value, is_test)
+//   VALUES ('test-metric-001', 'test-exec-001', 'success_rate', 95.5, 1)
+// `).run();
 
-    const userId = db.prepare(
-      'SELECT id FROM users WHERE email = ?'
-    ).get(TEST_USER.email).id;
-
-    // ─── Step 2: Add more data here ───────────────────────────
-    // Uncomment and customize for your step:
-    //
-    // db.prepare(`
-    //   INSERT INTO campaigns (name, user_id, status, is_test, created_at)
-    //   VALUES (?, ?, 'draft', 1, ?)
-    // `).run('Test Campaign', userId, FIXED_TIMESTAMP);
-
-    db.close();
-    return { userId, step: 1 };
-  } catch (err) {
-    db.close();
-    throw err;
-  }
-}
-
-// ─── CLI Support ────────────────────────────────────────────────
-// Run directly: node seeds/step-1-signup.mjs ./data/app.db
-const dbPath = process.argv[2];
-if (dbPath) {
-  seed(dbPath)
-    .then((result) => console.log('Seeded:', result))
-    .catch((err) => { console.error('Seed failed:', err); process.exit(1); });
-}
+console.log('✅ Seeded to Step 1: User created');
+db.close();

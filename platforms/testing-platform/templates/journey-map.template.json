@@ -1,46 +1,83 @@
 {
-  "id": "REPLACE-journey-id",
-  "name": "REPLACE Journey Name",
-  "description": "REPLACE with description of this user flow",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "_comment": "Testing Platform — Journey Map Template. Copy and customize for your project.",
+  "journeyId": "your-journey-id",
+  "name": "Your Journey Name",
+  "description": "Describe the end-to-end user flow this journey covers",
+  "domain": "your-platform",
   "version": "1.0.0",
   "steps": [
     {
       "step": 1,
-      "name": "REPLACE Step Name",
-      "description": "REPLACE what happens in this step",
-      "route": "/REPLACE",
-      "method": "GET",
-      "requiresAuth": false,
+      "name": "Onboarding",
+      "description": "User creates account and completes initial setup",
+      "preconditions": [],
       "actions": [
-        { "type": "fill", "selector": "#email", "value": "test@testing.local" },
-        { "type": "click", "selector": "#submit" }
+        "Navigate to /signup",
+        "Fill registration form",
+        "Verify email"
       ],
-      "assertions": [
-        { "type": "url", "value": "/dashboard" },
-        { "type": "visible", "selector": ".success-message" }
+      "postconditions": [
+        "User record exists in DB",
+        "Email verified flag is true"
       ],
-      "artifacts": ["REPLACE: what gets created"],
-      "seedScript": "./seeds/step-1-REPLACE.mjs",
-      "seedDescription": "REPLACE: what the seed creates"
+      "artifacts": ["user_record"],
+      "seedScript": "seed-step-1.mjs",
+      "testSpec": "onboarding.spec.ts"
     },
     {
       "step": 2,
-      "name": "REPLACE Step 2 Name",
-      "description": "REPLACE what happens in step 2",
-      "route": "/REPLACE",
-      "method": "GET",
-      "requiresAuth": true,
+      "name": "Configuration",
+      "description": "User configures their workspace / project / campaign",
+      "preconditions": ["User record exists", "Email verified"],
       "actions": [
-        { "type": "fill", "selector": "#name", "value": "Test User" },
-        { "type": "click", "selector": "#save" }
+        "Navigate to /settings",
+        "Configure domain-specific options",
+        "Save configuration"
       ],
-      "assertions": [
-        { "type": "visible", "selector": ".success-toast" }
+      "postconditions": [
+        "Configuration record exists",
+        "Status is 'configured'"
       ],
-      "artifacts": ["REPLACE: what gets created"],
-      "seedScript": "./seeds/step-2-REPLACE.mjs",
-      "seedDescription": "REPLACE: what the seed creates"
+      "artifacts": ["config_record"],
+      "seedScript": "seed-step-2.mjs",
+      "testSpec": "configuration.spec.ts"
+    },
+    {
+      "step": 3,
+      "name": "Execution",
+      "description": "User triggers the core action (send, publish, generate, etc.)",
+      "preconditions": ["Configuration complete"],
+      "actions": [
+        "Navigate to /dashboard",
+        "Click execute button",
+        "Confirm action"
+      ],
+      "postconditions": [
+        "Execution record created",
+        "Status is 'completed'"
+      ],
+      "artifacts": ["execution_record", "output_artifact"],
+      "seedScript": "seed-step-3.mjs",
+      "testSpec": "execution.spec.ts"
+    },
+    {
+      "step": 4,
+      "name": "Results",
+      "description": "User views results and metrics from the execution",
+      "preconditions": ["Execution completed"],
+      "actions": [
+        "Navigate to /results",
+        "View metrics dashboard",
+        "Verify expected numbers"
+      ],
+      "postconditions": [
+        "Metrics are displayed",
+        "Numbers match expected values"
+      ],
+      "artifacts": ["metrics_snapshot"],
+      "seedScript": "seed-step-4.mjs",
+      "testSpec": "results.spec.ts"
     }
-  ],
-  "resetScript": "./seeds/reset.mjs"
+  ]
 }
