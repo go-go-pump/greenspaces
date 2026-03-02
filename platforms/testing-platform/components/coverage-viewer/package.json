@@ -1,0 +1,10 @@
+{
+  "name": "@greenspaces/coverage-viewer",
+  "version": "1.0.0",
+  "description": "Visual test coverage heatmap generator from journey maps",
+  "type": "module",
+  "main": "src/index.mjs",
+  "scripts": {},
+  "dependencies": {},
+  "license": "MIT"
+}

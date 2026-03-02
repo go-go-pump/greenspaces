@@ -1,0 +1,10 @@
+{
+  "name": "@greenspaces/test-dashboard",
+  "version": "1.0.0",
+  "description": "Vanilla HTML testing dashboard — seed, run, reset, view results",
+  "type": "module",
+  "main": "public/index.html",
+  "scripts": {},
+  "dependencies": {},
+  "license": "MIT"
+}

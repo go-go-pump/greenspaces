@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing Dashboard</title>
+  <style>
+    :root {
+      --coral: #E8735A;
+      --orange: #F4A261;
+      --golden: #FFD166;
+      --bg: #1a1a2e;
+      --surface: #16213e;
+      --surface-alt: #0f3460;
+      --text: #f0f0f0;
+      --text-muted: #a0a0b0;
+      --success: #4ade80;
+      --failure: #f87171;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--coral), var(--orange), var(--golden));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle { color: var(--text-muted); margin-bottom: 2rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      color: var(--orange);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--bg);
+      transition: transform 0.1s, opacity 0.2s;
+      margin: 0.25rem;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-coral { background: var(--coral); }
+    .btn-orange { background: var(--orange); }
+    .btn-golden { background: var(--golden); }
+    .btn-success { background: var(--success); }
+    .btn-danger { background: var(--failure); }
+
+    .seed-buttons { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface-alt);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .status-dot.seeded { background: var(--golden); }
+    .status-dot.running { background: var(--orange); animation: pulse 1s infinite; }
+    .status-dot.passed { background: var(--success); }
+    .status-dot.failed { background: var(--failure); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .results-list { list-style: none; }
+
+    .results-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .results-list .pass { color: var(--success); }
+    .results-list .fail { color: var(--failure); }
+
+    .coverage-bar {
+      height: 8px;
+      background: var(--surface-alt);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+
+    .coverage-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .coverage-fill.high { background: var(--success); }
+    .coverage-fill.mid { background: var(--golden); }
+    .coverage-fill.low { background: var(--failure); }
+
+    .log-output {
+      background: #0d1117;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .journey-steps {
+      display: flex;
+      gap: 0;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .journey-step {
+      padding: 0.5rem 1rem;
+      background: var(--surface-alt);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      position: relative;
+    }
+
+    .journey-step.active {
+      border: 2px solid var(--golden);
+    }
+
+    .journey-arrow {
+      color: var(--text-muted);
+      padding: 0 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧪 Testing Dashboard</h1>
+  <p class="subtitle">Seed · Run · View · Reset — powered by Greenspaces Testing Platform</p>
+
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Ready — no tests seeded</span>
+  </div>
+
+  <div class="grid">
+
+    <!-- Journey Map -->
+    <div class="card">
+      <h2>🗺️ Journey Map</h2>
+      <div class="journey-steps" id="journeySteps">
+        <div class="journey-step">Step 1</div>
+        <span class="journey-arrow">→</span>
+        <div class="journey-step">Step 2</div>
+        <span class="journey-arrow">→</span>
+        <div class="journey-step">Step 3</div>
+        <span class="journey-arrow">→</span>
+        <div class="journey-step">Step 4</div>
+      </div>
+      <p style="color: var(--text-muted); margin-top: 1rem; font-size: 0.85rem;">
+        Define your journeys in <code>test/journeys/*.json</code>
+      </p>
+    </div>
+
+    <!-- Seed Controls -->
+    <div class="card">
+      <h2>🌱 Seed Data</h2>
+      <div class="seed-buttons" id="seedButtons">
+        <button class="btn btn-golden" onclick="seedStep(1)">Seed Step 1</button>
+        <button class="btn btn-golden" onclick="seedStep(2)">Seed Step 2</button>
+        <button class="btn btn-golden" onclick="seedStep(3)">Seed Step 3</button>
+        <button class="btn btn-golden" onclick="seedStep(4)">Seed Step 4</button>
+      </div>
+    </div>
+
+    <!-- Run Tests -->
+    <div class="card">
+      <h2>▶️ Run Tests</h2>
+      <button class="btn btn-orange" id="runBtn" onclick="runTests()">Run Full Journey Test</button>
+      <button class="btn btn-coral" onclick="runTests('smoke')">Smoke Test</button>
+    </div>
+
+    <!-- Results -->
+    <div class="card">
+      <h2>📊 Results</h2>
+      <ul class="results-list" id="resultsList">
+        <li><span>No results yet</span><span class="pass">—</span></li>
+      </ul>
+    </div>
+
+    <!-- Coverage -->
+    <div class="card">
+      <h2>📈 Coverage</h2>
+      <div id="coverageSection">
+        <div style="margin-bottom: 0.75rem;">
+          <span>Lines: <strong id="covLines">—</strong></span>
+          <div class="coverage-bar"><div class="coverage-fill high" id="covLinesBar" style="width: 0%"></div></div>
+        </div>
+        <div style="margin-bottom: 0.75rem;">
+          <span>Branches: <strong id="covBranches">—</strong></span>
+          <div class="coverage-bar"><div class="coverage-fill mid" id="covBranchesBar" style="width: 0%"></div></div>
+        </div>
+        <div>
+          <span>Functions: <strong id="covFunctions">—</strong></span>
+          <div class="coverage-bar"><div class="coverage-fill high" id="covFunctionsBar" style="width: 0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset -->
+    <div class="card">
+      <h2>🔄 Reset</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+        Removes all rows where <code>is_test = 1</code>. Production data is never touched.
+      </p>
+      <button class="btn btn-danger" onclick="resetData()">Reset All Test Data</button>
+    </div>
+
+  </div>
+
+  <!-- Log Output -->
+  <div class="card">
+    <h2>📋 Log</h2>
+    <div class="log-output" id="logOutput">Testing dashboard ready.\nConfigure API base in the script below.</div>
+  </div>
+
+  <script>
+    // ─── Configuration ───────────────────────────────────────
+    const API_BASE = '/api/test';
+
+    // ─── Helpers ─────────────────────────────────────────────
+    function log(msg) {
+      const el = document.getElementById('logOutput');
+      el.textContent += '\n' + new Date().toLocaleTimeString() + ' ' + msg;
+      el.scrollTop = el.scrollHeight;
+    }
+
+    function setStatus(state, text) {
+      const dot = document.getElementById('statusDot');
+      dot.className = 'status-dot ' + state;
+      document.getElementById('statusText').textContent = text;
+    }
+
+    // ─── Actions ─────────────────────────────────────────────
+    async function seedStep(step) {
+      log(`Seeding to step ${step}...`);
+      setStatus('running', `Seeding step ${step}...`);
+      try {
+        const res = await fetch(`${API_BASE}/seed/${step}`, { method: 'POST' });
+        const data = await res.json();
+        log(`Seeded: ${JSON.stringify(data)}`);
+        setStatus('seeded', `Seeded to step ${step}`);
+
+        // Highlight active step
+        document.querySelectorAll('.journey-step').forEach((el, i) => {
+          el.classList.toggle('active', i < step);
+        });
+      } catch (err) {
+        log(`Seed failed: ${err.message}`);
+        setStatus('failed', 'Seed failed');
+      }
+    }
+
+    async function runTests(suite) {
+      const label = suite || 'full';
+      log(`Running ${label} test suite...`);
+      setStatus('running', `Running ${label} tests...`);
+      document.getElementById('runBtn').disabled = true;
+
+      try {
+        const body = suite ? JSON.stringify({ suite }) : '{}';
+        const res = await fetch(`${API_BASE}/run`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body,
+        });
+        const data = await res.json();
+        log(`Run complete: ${data.passed} passed, ${data.failed} failed`);
+        setStatus(data.failed === 0 ? 'passed' : 'failed',
+          `${data.passed} passed, ${data.failed} failed`);
+
+        // Update results list
+        const list = document.getElementById('resultsList');
+        list.innerHTML = (data.tests || []).map(t =>
+          `<li><span>${t.name}</span><span class="${t.status}">${t.status}</span></li>`
+        ).join('') || '<li><span>No test details</span><span>—</span></li>';
+      } catch (err) {
+        log(`Run failed: ${err.message}`);
+        setStatus('failed', 'Test run failed');
+      }
+
+      document.getElementById('runBtn').disabled = false;
+    }
+
+    async function resetData() {
+      if (!confirm('Reset all test data? This removes all is_test=1 rows.')) return;
+      log('Resetting test data...');
+      setStatus('running', 'Resetting...');
+      try {
+        const res = await fetch(`${API_BASE}/reset`, { method: 'POST' });
+        const data = await res.json();
+        log(`Reset complete: ${data.deleted} rows removed`);
+        setStatus('', `Reset — ${data.deleted} rows removed`);
+        document.querySelectorAll('.journey-step').forEach(el => el.classList.remove('active'));
+      } catch (err) {
+        log(`Reset failed: ${err.message}`);
+        setStatus('failed', 'Reset failed');
+      }
+    }
+
+    // ─── Init: Load status ───────────────────────────────────
+    (async function init() {
+      try {
+        const res = await fetch(`${API_BASE}/status`);
+        const data = await res.json();
+        if (data.seededStep) {
+          setStatus('seeded', `Seeded to step ${data.seededStep}`);
+        }
+      } catch { /* API not connected yet */ }
+
+      try {
+        const res = await fetch(`${API_BASE}/coverage`);
+        const data = await res.json();
+        if (data.summary) {
+          const s = data.summary;
+          document.getElementById('covLines').textContent = s.lines.pct + '%';
+          document.getElementById('covLinesBar').style.width = s.lines.pct + '%';
+          document.getElementById('covBranches').textContent = s.branches.pct + '%';
+          document.getElementById('covBranchesBar').style.width = s.branches.pct + '%';
+          document.getElementById('covFunctions').textContent = s.functions.pct + '%';
+          document.getElementById('covFunctionsBar').style.width = s.functions.pct + '%';
+        }
+      } catch { /* No coverage data yet */ }
+    })();
+  </script>
+
+</body>
+</html>

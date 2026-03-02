@@ -1,0 +1,12 @@
+{
+  "name": "@greenspaces/seed-engine",
+  "version": "1.0.0",
+  "description": "Deterministic test data seeding and teardown engine",
+  "type": "module",
+  "main": "src/index.mjs",
+  "scripts": {},
+  "peerDependencies": {
+    "better-sqlite3": "^11.0.0"
+  },
+  "license": "MIT"
+}

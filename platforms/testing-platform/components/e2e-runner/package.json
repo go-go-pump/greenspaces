@@ -1,0 +1,15 @@
+{
+  "name": "@greenspaces/e2e-runner",
+  "version": "1.0.0",
+  "description": "Playwright test execution engine with trace capture and structured results",
+  "type": "module",
+  "main": "src/index.mjs",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "license": "MIT"
+}

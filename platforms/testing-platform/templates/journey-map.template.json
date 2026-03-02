@@ -1,0 +1,46 @@
+{
+  "id": "REPLACE-journey-id",
+  "name": "REPLACE Journey Name",
+  "description": "REPLACE with description of this user flow",
+  "version": "1.0.0",
+  "steps": [
+    {
+      "step": 1,
+      "name": "REPLACE Step Name",
+      "description": "REPLACE what happens in this step",
+      "route": "/REPLACE",
+      "method": "GET",
+      "requiresAuth": false,
+      "actions": [
+        { "type": "fill", "selector": "#email", "value": "test@testing.local" },
+        { "type": "click", "selector": "#submit" }
+      ],
+      "assertions": [
+        { "type": "url", "value": "/dashboard" },
+        { "type": "visible", "selector": ".success-message" }
+      ],
+      "artifacts": ["REPLACE: what gets created"],
+      "seedScript": "./seeds/step-1-REPLACE.mjs",
+      "seedDescription": "REPLACE: what the seed creates"
+    },
+    {
+      "step": 2,
+      "name": "REPLACE Step 2 Name",
+      "description": "REPLACE what happens in step 2",
+      "route": "/REPLACE",
+      "method": "GET",
+      "requiresAuth": true,
+      "actions": [
+        { "type": "fill", "selector": "#name", "value": "Test User" },
+        { "type": "click", "selector": "#save" }
+      ],
+      "assertions": [
+        { "type": "visible", "selector": ".success-toast" }
+      ],
+      "artifacts": ["REPLACE: what gets created"],
+      "seedScript": "./seeds/step-2-REPLACE.mjs",
+      "seedDescription": "REPLACE: what the seed creates"
+    }
+  ],
+  "resetScript": "./seeds/reset.mjs"
+}

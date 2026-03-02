@@ -1,0 +1,92 @@
+{
+  "id": "yomo-campaign-lifecycle",
+  "name": "YOMO Campaign Lifecycle",
+  "description": "Full lifecycle of a YOMO experience campaign: create, add experiences, publish, receive bookings",
+  "version": "1.0.0",
+  "steps": [
+    {
+      "step": 1,
+      "name": "Create Campaign",
+      "description": "Admin creates a new experience campaign with title and region",
+      "route": "/admin/campaigns/new",
+      "method": "GET",
+      "requiresAuth": true,
+      "actions": [
+        { "type": "fill", "selector": "#campaign-name", "value": "Summer Adventures 2026" },
+        { "type": "select", "selector": "#region", "value": "northeast" },
+        { "type": "fill", "selector": "#description", "value": "Curated summer experiences across the Northeast" },
+        { "type": "click", "selector": "#create-campaign" }
+      ],
+      "assertions": [
+        { "type": "url", "value": "/admin/campaigns/test-campaign-001" },
+        { "type": "visible", "selector": ".campaign-header" },
+        { "type": "text", "selector": ".campaign-status", "value": "Draft" }
+      ],
+      "artifacts": ["campaign record", "campaign ID"],
+      "seedScript": "./seeds/step-1-create-campaign.mjs",
+      "seedDescription": "Creates test admin user and draft campaign"
+    },
+    {
+      "step": 2,
+      "name": "Add Experiences",
+      "description": "Admin adds experience listings to the campaign",
+      "route": "/admin/campaigns/test-campaign-001/experiences",
+      "method": "GET",
+      "requiresAuth": true,
+      "actions": [
+        { "type": "click", "selector": "#add-experience" },
+        { "type": "fill", "selector": "#exp-title", "value": "Sunset Kayaking on Lake Champlain" },
+        { "type": "fill", "selector": "#exp-price", "value": "75.00" },
+        { "type": "fill", "selector": "#exp-capacity", "value": "12" },
+        { "type": "click", "selector": "#save-experience" }
+      ],
+      "assertions": [
+        { "type": "visible", "selector": ".experience-card" },
+        { "type": "count", "selector": ".experience-card", "value": 3 },
+        { "type": "text", "selector": ".campaign-status", "value": "Draft" }
+      ],
+      "artifacts": ["3 experience listings linked to campaign"],
+      "seedScript": "./seeds/step-2-add-experiences.mjs",
+      "seedDescription": "Creates campaign with 3 experience listings"
+    },
+    {
+      "step": 3,
+      "name": "Publish Campaign",
+      "description": "Admin publishes the campaign, making experiences live",
+      "route": "/admin/campaigns/test-campaign-001",
+      "method": "GET",
+      "requiresAuth": true,
+      "actions": [
+        { "type": "click", "selector": "#publish-campaign" },
+        { "type": "click", "selector": "#confirm-publish" }
+      ],
+      "assertions": [
+        { "type": "text", "selector": ".campaign-status", "value": "Published" },
+        { "type": "visible", "selector": ".publish-date" }
+      ],
+      "artifacts": ["published campaign", "public listing URLs"],
+      "seedScript": "./seeds/step-3-publish.mjs",
+      "seedDescription": "Creates published campaign with live experience listings"
+    },
+    {
+      "step": 4,
+      "name": "Receive Bookings",
+      "description": "Customers book experiences, admin views booking dashboard",
+      "route": "/admin/campaigns/test-campaign-001/bookings",
+      "method": "GET",
+      "requiresAuth": true,
+      "actions": [
+        { "type": "navigate", "url": "/admin/campaigns/test-campaign-001/bookings" }
+      ],
+      "assertions": [
+        { "type": "count", "selector": ".booking-row", "value": 5 },
+        { "type": "text", "selector": ".total-revenue", "value": "$375.00" },
+        { "type": "visible", "selector": ".booking-chart" }
+      ],
+      "artifacts": ["5 bookings", "revenue totals", "booking analytics"],
+      "seedScript": "./seeds/step-4-bookings.mjs",
+      "seedDescription": "Creates published campaign with experiences and 5 mock bookings"
+    }
+  ],
+  "resetScript": "./seeds/reset.mjs"
+}

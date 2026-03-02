@@ -38,7 +38,7 @@ A shared component must meet ALL of the following criteria:
 | `CANDIDATE` | `session-arc-composer` | Composes ordered content sequences with emotional pacing | Good Vibes | Good Vibes |
 | `CANDIDATE` | `temporal-workflow-runner` | Temporal workflow execution wrapper | MVH | MVH |
 | `PLANNED` | `deploy-script` | Standardized deployment (SST/CDK/Docker Compose) | All projects | New |
-| `PLANNED` | `e2e-test-runner` | Playwright test execution + reporting | All projects | New |
+| `AVAILABLE` | `e2e-runner` | Playwright test execution + journey-based test generation | All projects | testing-platform |
 | `PLANNED` | `guardrail-filter` | Ethical content filter (published exclusion rules) | Good Vibes, future platforms | Good Vibes |
 
 ---
@@ -87,7 +87,7 @@ Platforms are curated collections of shared components for a specific domain. Th
 | `video-platform` | YouTube video content | vidgen-pipeline, vidpub, vid-campaign | AVAILABLE — [reference doc](./platforms/video-platform/) |
 | `social-dm-platform` | Facebook engagement + DM outreach | fb-auth, fb-graphql-scraper, browser-watcher | Components are CANDIDATE |
 | `cold-email-platform` | Multi-tenant email campaigns | email-campaign-core, contact-store, email-send | Components are CANDIDATE |
-| `testing-platform` | E2E testing + seed data | e2e-test-runner, seed-manager | Components are PLANNED |
+| `testing-platform` | E2E testing + seed data + journey mapping | e2e-runner, seed-engine, test-dashboard, coverage-viewer, journey-mapper | AVAILABLE — [reference doc](./platforms/testing-platform/) |
 | `monitoring-platform` | Health checks + business metrics | metric-beacon, metric-snapshot | Components are AVAILABLE |
 
 ---
