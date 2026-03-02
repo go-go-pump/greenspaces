@@ -53,7 +53,7 @@ The aggregate of services that keep a business running, healthy, and visible to 
 |---------|-------------|-----------------|---------------|
 | `testing-dashboard` | E2E test coverage, Playwright execution, journey playback, seed/reset data | `e2e-runner`, `seed-engine`, `test-dashboard`, `coverage-viewer`, `journey-mapper` | AVAILABLE — [reference platform](./platforms/testing-platform/) |
 | `monitoring-dashboard` | Health checks, errors, sales data, milemarkers, ideas, founder input | `metric-beacon`, `metric-snapshot` | Planned |
-| `deployment-dashboard` | See all deployments, CI/CD pipeline status, rollback capability | `deploy-script` | Planned |
+| `deployment-dashboard` | See all deployments, version tracking, deploy history, rollback visibility | `deploy-logger`, `deploy-dashboard`, `version-tracker`, `deploy-history` | AVAILABLE — [reference platform](./platforms/deployment-platform/) |
 | `launch-pad` | God Mode entry point — catch requests, classify, route to executor | Standalone | Scaffolded |
 
 #### Monitoring Architecture (Lightweight)

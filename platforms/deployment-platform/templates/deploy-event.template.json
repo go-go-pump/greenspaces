@@ -1,0 +1,20 @@
+{
+  "eventId": "deploy_{YYYYMMDD}_{HHMMSS}_{shortSha}",
+  "timestamp": "2026-01-01T00:00:00Z",
+  "projectId": "my-project",
+  "environment": "production",
+  "version": "1.0.0",
+  "previousVersion": null,
+  "status": "success",
+  "actor": "whoami",
+  "actorType": "human",
+  "duration": null,
+  "commitSha": null,
+  "commitMessage": null,
+  "branch": "main",
+  "artifacts": {
+    "logs": null,
+    "diff": null
+  },
+  "metadata": {}
+}

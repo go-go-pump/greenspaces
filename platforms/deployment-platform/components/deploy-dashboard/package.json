@@ -1,0 +1,12 @@
+{
+  "name": "@greenspaces/deploy-dashboard",
+  "version": "1.0.0",
+  "description": "Vanilla HTML deployment dashboard with sunrise palette",
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo 'No runnable code yet — docs and interfaces only'"
+  },
+  "keywords": ["greenspaces", "deployment", "dashboard"],
+  "license": "MIT"
+}

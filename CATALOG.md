@@ -37,6 +37,10 @@ A shared component must meet ALL of the following criteria:
 | `CANDIDATE` | `llm-tagger` | LLM-powered content classification (Claude Haiku, structured JSON output) | Good Vibes, Video Platform | Good Vibes |
 | `CANDIDATE` | `session-arc-composer` | Composes ordered content sequences with emotional pacing | Good Vibes | Good Vibes |
 | `CANDIDATE` | `temporal-workflow-runner` | Temporal workflow execution wrapper | MVH | MVH |
+| `AVAILABLE` | `deploy-logger` | Receives deploy events, validates schema, appends to history | All projects | deployment-platform |
+| `AVAILABLE` | `deploy-dashboard` | Vanilla HTML deployment timeline + version map | All projects | deployment-platform |
+| `AVAILABLE` | `version-tracker` | Tracks semantic versions per project/environment, detects drift | All projects | deployment-platform |
+| `AVAILABLE` | `deploy-history` | SQLite-backed deploy event storage and query API | All projects | deployment-platform |
 | `PLANNED` | `deploy-script` | Standardized deployment (SST/CDK/Docker Compose) | All projects | New |
 | `AVAILABLE` | `e2e-runner` | Playwright test execution + journey-based test generation | All projects | testing-platform |
 | `PLANNED` | `guardrail-filter` | Ethical content filter (published exclusion rules) | Good Vibes, future platforms | Good Vibes |
@@ -88,6 +92,7 @@ Platforms are curated collections of shared components for a specific domain. Th
 | `social-dm-platform` | Facebook engagement + DM outreach | fb-auth, fb-graphql-scraper, browser-watcher | Components are CANDIDATE |
 | `cold-email-platform` | Multi-tenant email campaigns | email-campaign-core, contact-store, email-send | Components are CANDIDATE |
 | `testing-platform` | E2E testing + seed data + journey mapping | e2e-runner, seed-engine, test-dashboard, coverage-viewer, journey-mapper | AVAILABLE — [reference doc](./platforms/testing-platform/) |
+| `deployment-platform` | Deploy event logging, version tracking, deploy visibility | deploy-logger, deploy-dashboard, version-tracker, deploy-history | AVAILABLE — [reference doc](./platforms/deployment-platform/) |
 | `monitoring-platform` | Health checks + business metrics | metric-beacon, metric-snapshot | Components are AVAILABLE |
 
 ---

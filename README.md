@@ -42,6 +42,8 @@ greenspaces/
 │   └── (more components in CATALOG.md)
 ├── platforms/                             # Reference architectures by domain
 │   ├── video-platform/                    # YouTube video content platform
+│   ├── testing-platform/                  # E2E testing + seed data + journeys
+│   ├── deployment-platform/               # Deploy logging + version tracking + dashboards
 │   └── (more platforms as components mature)
 └── services/                              # Full service suites
     ├── marketing-platform-suite/          # Video, social, email services
